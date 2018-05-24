@@ -599,7 +599,7 @@ ________________________________________________________________________________
 
 
     ### Out LogFile
-    $LogFileName = "PrinterMapping_{0}_{1}_{2}.txt" -f $env:USERNAME, $env:COMPUTERNAME, (Get-Date -f yyyy-MM-dd).ToString()
+    $LogFileName = "PrinterMapping_{0}.txt" -f $env:USERNAME
     $LogFileAbsolutePath = (Join-Path -Path $Script:LogFilePath -ChildPath $LogFileName)
     $LogMessage | Out-File -FilePath $LogFileAbsolutePath -Append 
 
