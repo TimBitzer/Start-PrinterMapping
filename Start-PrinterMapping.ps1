@@ -391,16 +391,9 @@ function Start-PrinterMapping
         ### Build UNC path for $NewDefaultPrinter
         $NewDefaultPrinterUNCPath = "\\{0}\{1}" -f $PrintServer, $NewDefaultPrinter
 
-        ### Check if 'UseWMI' is set and get all connected printers wither with WMI or PSCmdlet
-        if ($Script:UseWMI)
-        {
-            $InstalledPrinters = Get-WmiObject -Class Win32_Printer
-        }
-
-        else
-        {
-            $InstalledPrinters = Get-Printer
-        }
+        ### Use WMI anyway since the method '.SetDefaultPrinter()' only wokrs with WMI
+        $InstalledPrinters = Get-Printer
+        
 
         ### Check if $NewDefaultPrinterUNCPath printer is already connected
         if ($InstalledPrinters.Name -contains $NewDefaultPrinterUNCPath)
@@ -535,11 +528,13 @@ function New-LogMessage
 
     Started 'Start-PrinterMapping.ps1' - {0}
 
+    Executed on machine: {1}
+
     Following parameters were used:
-    {1}
+    {2}
 
 _____________________________________________________________________________________________________________________________________
-"@ -f (Get-Date), $GivenParameters
+"@ -f (Get-Date), $env:COMPUTERNAME, $GivenParameters
     }
 
     #### Logfile footer
@@ -548,7 +543,7 @@ ________________________________________________________________________________
         $LogMessage = @" 
 _____________________________________________________________________________________________________________________________________
 
-    Finished 'Start-PrinterMapping'
+    Finished 'Start-PrinterMapping.ps1'
 
     Script took {0} seconds to execute.
 
