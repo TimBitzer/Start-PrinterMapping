@@ -789,7 +789,7 @@ function Remove-ExistingNetworkPrinters
     ### Create Wscript object to remove printers
     $WNet = New-Object -ComObject WScript.Network
 
-    foreach ($Printer in $Printers)
+    foreach ($Printer in $InstalledPrinters)
     {
         ### Check if printer is a network (shared) printer
         if ($Printer.Shared -eq $true)
